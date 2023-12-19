@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.dao.EmployeeDao">
+<!--    lists-->
+    <resultMap id="employeeDepartmentResultMap" type="com.cc.dto.EmployeeDepartmentDto">
+        <result property="employee_id" column="employee_id"></result>
+        <result property="employee_name" column="employee_name"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="department_name" column="department_name"></result>
+    </resultMap>
+    <select id="getEmployeeWithDepartments" resultMap="employeeDepartmentResultMap">
+        select e.employee_id,e.employee_name,e.address,e.sex,d.department_name as department_name
+        from employee e
+        left join department d on e.department = d.department_id
+    </select>
+
+<!--    save-->
+    <insert id="save" parameterType="Employee" useGeneratedKeys="true" keyProperty="employee_id">
+        insert into `employee`(employee_id,employee_name,sex,address,department,job_title,employment_status,birth_date,hire_date,empInsuranceNumber,pensionNumber,positionRank,resume,password,email,phone) values (#{employee_id},#{employee_name},#{sex},#{address},#{department},#{job_title},#{employment_status},#{birth_date},#{hire_date},#{empInsuranceNumber},#{pensionNumber},#{positionRank},#{resume},#{password},#{email},#{phone})
+    </insert>
+<!--    findById-->
+    <select id="findById" parameterType="Integer" resultType="Employee">
+        select * from `employee`
+        where employee_id = #{employee_id}
+    </select>
+    <!--    update-->
+    <update id="update" parameterType="map">
+        update `employee` set employee_id=#{employee_id},employee_name=#{employee_name},sex=#{sex},address=#{address},department=#{department},job_title=#{job_title},employment_status=#{employment_status},birth_date=#{birth_date},hire_date=#{hire_date},empInsuranceNumber=#{empInsuranceNumber},pensionNumber=#{pensionNumber},positionRank=#{positionRank},resume=#{resume},password=#{password},email=#{email},phone=#{phone}
+        where employee_id = #{employee_id}
+    </update>
+<!--    delete-->
+    <delete id="delete" parameterType="Integer">
+        delete from `employee` where employee_id = #{employee_id}
+    </delete>
+<!--    search-->
+    <select id="search" parameterType="map" resultMap="employeeDepartmentResultMap">
+        select e.employee_id,e.employee_name,e.address,e.sex,d.department_name as department_name
+        from employee e
+        left join department d on e.department = d.department_id
+
+        <where>
+            <if test="employee_id!=null and employee_id!=''">
+                and employee_id=#{employee_id}
+            </if>
+            <if test="employee_name!=null and employee_name!=''">
+                and employee_name like concat ('%',#{employee_name},'%')
+            </if>
+            <if test="department!=null and department!=''">
+                and d.department_name like concat ('%',#{department},'%')
+            </if>
+            <if test="address!=null and address!=''">
+                and address like concat ('%',#{address},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

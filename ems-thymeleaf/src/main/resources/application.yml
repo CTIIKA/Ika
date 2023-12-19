@@ -1,0 +1,44 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /ems-thymeleaf
+
+# spring相关配置 datasource数据源 thymeleaf模板引擎
+spring:
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ems?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=JST
+    username: root
+    password: 1099406878
+  web:
+    resources:
+      static-locations: classpath:/static/,file:${resume.file.dir}
+
+  servlet:
+    multipart:
+      max-file-size: 120MB
+      max-request-size: 120MB
+
+# mybatis配置
+mybatis:
+  mapper-locations: classpath:com/cc/mapper/*.xml
+  type-aliases-package: com.cc.entity
+
+# 日志配置
+logging:
+  level:
+    root: info
+    com.cc: debug
+
+# 指定文件上传位置
+resume:
+  file:
+    dir: E:\JP\IJ\Java项目\ems-thymeleaf\Resume
+
