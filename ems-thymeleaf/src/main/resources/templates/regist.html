@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>regist</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+		<link rel="stylesheet" type="text/css" th:href="@{/css/styl.css}" />
+
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="top_content">
+					<div id="header">
+						<div id="rightheader">
+						</div>
+						<div id="topheader">
+							<h1 id="title">
+								<a href="#">社員管理システム</a>
+							</h1>
+						</div>
+					</div>
+				<div id="content">
+					<p id="whereami">
+					</p>
+					<h1>
+						アカウントを作成
+					</h1>
+					<form th:action="@{/user/register}" method="post" th:object="${user}">
+						<table cellpadding="0" cellspacing="0" border="0"
+							class="form_table">
+
+
+							<tr>
+								<td valign="middle" align="right">
+									ユーザID:
+									<br>
+									<input type="text" class="inputgri" th:field="*{user_name}" />
+									<span th:if="${#fields.hasErrors('user_name')}" class="error1" th:errors="*{user_name}"></span>
+									<span th:if="${errorMsg2}" class="errorMsg2" th:text="${errorMsg2}"></span>
+								</td>
+							</tr>
+
+
+							<tr>
+								<td valign="middle" align="right">
+									パスワード:
+									<br>
+									<input type="password" class="inputgri" th:field="*{password}"/>
+									<span th:if="${#fields.hasErrors('password')}" class="error2" th:errors="*{password}"></span>
+									<span th:if="${errorMsg3}" class="errorMsg3" th:text="${errorMsg3}"></span>
+								</td>
+							</tr>
+
+
+							<tr>
+							<td valign="middle" align="right">
+								画像に表示されている文字を読み取ってください:
+								<br>
+								<input type="text" class="inputgri" name="code" />
+								<span th:if="${errorMsg1}" class="errorMsg1" th:text="${errorMsg1}"></span>
+							</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+
+									<img id="num" th:src="@{/user/generateImageCode}" />
+									<a href="javascript:" onclick="changeImageCode()" class="link1">別の画像を表示</a>
+									<script>
+										function changeImageCode(){
+											document.getElementById('num').src = '[[@{/user/generateImageCode}]]?'+(new Date()).getTime()
+										}
+									</script>
+								</td>
+							</tr>
+						</table>
+						<p>
+							<input type="submit" class="button" value="作成する &raquo;" />
+							すでにアカウントをお持ちですか？<a th:href="@{/user/loging}">サインイン</a></p>
+					</form>
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footer_bg">
+				CC@126.com
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

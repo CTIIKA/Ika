@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>login</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/styl.css}" />
+<!--		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="top_content">
+					<div id="header">
+						<div id="rightheader">
+						</div>
+						<div id="topheader">
+							<h1 id="title">
+								<a href="#">社員管理システム</a>
+							</h1>
+						</div>
+					</div>
+				<div id="content">
+					<p id="whereami">
+					</p>
+					<h1>
+						ログイン
+					</h1>
+					<form th:action="@{/user/login}" method="post" th:object="${user}">
+						<table cellpadding="0" cellspacing="0" border="0"
+							class="form_table">
+							<h2><span id="successMsg" th:text="${msg}"></span></h2>
+							<script th:inline="javascript">
+								var messageElement = document.getElementById("successMsg")
+								setTimeout(function (){
+									messageElement.style.display = 'none'
+								},1500);
+							</script>
+
+							<div th:if="${errorMsg}" class="error">
+								<p th:text="${errorMsg}"></p>
+							</div>
+							<tr>
+								<td valign="middle" align="right">
+									ユーザID
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" class="inputgri" th:field="*{user_name}" />
+									<span th:if="${#fields.hasErrors('user_name')}" class="error" th:errors="*{user_name}"></span>
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									パスワード
+								</td>
+								<td valign="middle" align="left">
+									<input type="password" class="inputgri" th:field="*{password}" />
+									<span th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}"></span>
+								</td>
+							</tr>
+						</table>
+						<p>
+							<input type="submit" class="button" value="ログイン &raquo;" />
+							<a th:href="@{/user/registering}">新規作成</a>
+						</p>
+					</form>
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footer_bg">
+					CC@126.com
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
