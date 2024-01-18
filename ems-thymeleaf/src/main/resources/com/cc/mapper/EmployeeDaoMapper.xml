@@ -59,7 +59,24 @@
 
 <!--    attendace-->
     <select id="getAllAttendances" parameterType="map" resultType="Attendance">
-        select * from 'attendance' where employee_id = #{employee_id} and year(attendance_date) = year(curdate())and month(attendance_date) = month(curdate())
+        select * from `attendance` where employee_id = #{employee_id} and year(attendance_date) = year(curdate())and month(attendance_date) = month(curdate())
+        order by attendance_date ASC
+    </select>
+
+    <select id="searchDate" parameterType="map" resultType="Attendance">
+        select * from `attendance`
+        <where>
+            <if test="year != null">
+                and year(attendance_date) = #{year}
+            </if>
+            <if test="month != null">
+                and month(attendance_date) = #{month}
+            </if>
+            <if test="day != null">
+                and day(attendance_date) = #{day}
+            </if>
+        and employee_id = #{employee_id}
+        </where>
         order by attendance_date ASC
     </select>
 </mapper>

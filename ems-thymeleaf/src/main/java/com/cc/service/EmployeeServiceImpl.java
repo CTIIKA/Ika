@@ -63,6 +63,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     return employeeDao.getAllAttendances(employeeId);
   }
 
+  @Override
+  public List<Attendance> searchDate(Integer employeeId, Integer year, Integer month, Integer day) {
+    return employeeDao.searchDate(employeeId,year,month,day);
+  }
+
 
   @Override
   public void delete(Integer employee_id) {

@@ -55,9 +55,9 @@
 
                 <div class="form-row">
                     <label class="label">社員番号：</label>
-                    <input type="text" name="employee_id">
+                    <input name="employee_id" th:value="${(#httpSession.setAttribute('employee_id'))}">
                     &nbsp;<label class="label">社員名：</label>
-                    <input type="text" name="employee_name">
+                    <input name="employee_name" th:value="${(#httpSession.setAttribute('employee_name'))}">
                 </div>
                 <div class="form-row">
                     <label class="label1">年：</label>
@@ -103,24 +103,21 @@
                     </td>
 
                 </tr>
-                <tr th:each="employee, rowStat : ${pageInfo.list}" th:class="${rowStat.odd}? 'row1' : 'row2'">
+                <tr th:each="attendance, rowStat : ${pageInfo.list}" th:class="${rowStat.odd}? 'row1' : 'row2'">
                     <td>
-                        <span th:text="${employee.employee_id}"></span>
+                        <span th:text="${#dates.format(attendance.attendance_date,'yyyy-MM-dd')}"></span>
                     </td>
                     <td>
-                        <span th:text="${employee.employee_name}"></span>
+                        <span th:text="${attendance.status}"></span>
                     </td>
                     <td>
-                        <span th:text="${employee.department_name}"></span>
+                        <span th:text="${#temporals.format(attendance.start_date,'HH:mm')}"></span>
                     </td>
                     <td>
-                        <span th:text="${employee.address}"></span>
+                        <span th:text="${#temporals.format(attendance.end_date,'HH:mm')}"></span>
                     </td>
                     <td>
-                        <span th:text="${employee.sex}"></span>
-                    </td>
-                    <td>
-                        <a th:href="@{/employee/detail(employee_id=${employee.employee_id})}">詳細</a>
+                        <span th:href="@{worker/detail(record_id=${attendance.record_id})}">詳細</span>
                     </td>
                 </tr>
             </table>
@@ -128,20 +125,20 @@
             <p class="number">  1～10件/<span th:text="${pageInfo.total}"></span>件</p >
             <ul class="pagination">
                 <li class="top-page">
-                    <a class="button4" th:href="@{/employee/search(employee_id=${employee_id},employee_name=${employee_name},department=${department},address=${address})}">&laquo;</a >
+                    <a class="button4" th:href="@{/worker/search(employee_id=${(#httpSession.getAttribute('employee_id'))},year=${searchYear},month=${searchMonth},day=${searchDay})}">&laquo;</a >
                 </li>
                 <li class="prev">
-                    <a class="button5" th:href="@{/employee/search(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1,employee_id=${employee_id},employee_name=${employee_name},department=${department},address=${address})}">&lt;</a >
+                    <a class="button5" th:href="@{/worker/search(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1,employee_id=${(#httpSession.getAttribute('employee_id'))},year=${searchYear},month=${searchMonth},day=${searchDay})}">&lt;</a >
                 </li>
                 <li th:each="nav:${pageInfo.navigatepageNums}">
-                    <a class="button6" th:href="@{/employee/search(pageNum=${nav})}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a >
+                    <a class="button6" th:href="@{/worker/search(pageNum=${nav})}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a >
                     <span class="button7" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>
                 </li>
                 <li class="next">
-                    <a class="button8" th:href="@{/employee/search(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages},employee_id=${employee_id},employee_name=${employee_name},department=${department},address=${address})}">&gt;</a >
+                    <a class="button8" th:href="@{/worker/search(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages},employee_id=${(#httpSession.getAttribute('employee_id'))},year=${searchYear},month=${searchMonth},day=${searchDay})}">&gt;</a >
                 </li>
                 <li class="last-page">
-                    <a class="button9" th:href="@{/employee/search(pageNum=${pageInfo.pages},employee_id=${employee_id},employee_name=${employee_name},department=${department},address=${address})}">&raquo;</a >
+                    <a class="button9" th:href="@{/worker/search(pageNum=${pageInfo.pages},employee_id=${(#httpSession.getAttribute('employee_id'))},year=${searchYear},month=${searchMonth},day=${searchDay})}">&raquo;</a >
                 </li>
             </ul>
         </div>

@@ -1,6 +1,5 @@
 package com.cc.controller;
 
-import com.cc.dto.EmployeeDepartmentDto;
 import com.cc.entity.Attendance;
 import com.cc.entity.Employee;
 import com.cc.service.EmployeeService;
@@ -10,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 
 @Controller
@@ -80,16 +80,25 @@ public class AttendanceController {
   @RequestMapping("search")
   public String searchDate(
           @RequestParam(defaultValue = "1",value = "pageNum")Integer pageNum,
-          Integer employee_id,
-          String employee_name,
-          String department,
-          String address, Model model){
+          @RequestParam(required = false) Integer year,
+          @RequestParam(required = false)Integer month,
+          @RequestParam(required = false)Integer day,
+          @RequestParam Integer employee_id,
+          Model model){
+    if (year == null && month == null){
+      year = Year.now().getValue();
+      month = LocalDate.now().getMonthValue();
+    }
+
     PageHelper.clearPage();
-    PageHelper.startPage(1,5);
-    List<EmployeeDepartmentDto>employee = employeeService.search(employee_id,employee_name,department,address);
-    PageInfo<EmployeeDepartmentDto> pageInfo = new PageInfo<>(employee);
+    PageHelper.startPage(pageNum,10);
+    List<Attendance>attendances = employeeService.searchDate(employee_id,year,month,day);
+    PageInfo<Attendance> pageInfo = new PageInfo<>(attendances);
     model.addAttribute("pageInfo",pageInfo);
-    return "emplist";
+    model.addAttribute("searchYear",year);
+    model.addAttribute("searchYear",month);
+    model.addAttribute("searchYear",day);
+    return "attendance";
   }
 
 

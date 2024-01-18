@@ -42,4 +42,6 @@ public interface EmployeeService {
   boolean isPasswordValid(Integer employeeId, String password);
 
   List<Attendance> getAllAttendances(Integer employeeId);
+
+  List<Attendance> searchDate(Integer employeeId, Integer year, Integer month, Integer day);
 }

@@ -25,7 +25,7 @@
                 社員ログイン
             </h1>
             <a th:href="@{/user/loging}" class="link2">ユーザログイン&raquo;</a>
-            <form th:action="@{/worker/employeelogin}" method="post" th:object="${employee}">
+            <form th:action="@{/worker/login}" method="post" th:object="${employee}">
                 <table class="form_table">
                     <h2><span id="successMsg" th:text="${msg}"></span></h2>
                     <script th:inline="javascript">

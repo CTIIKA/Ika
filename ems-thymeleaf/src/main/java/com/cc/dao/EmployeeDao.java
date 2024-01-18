@@ -27,4 +27,6 @@ public interface EmployeeDao {
           @Param("address") String address);
 
   List<Attendance> getAllAttendances(Integer employeeId);
+
+  List<Attendance> searchDate(Integer employeeId, Integer year, Integer month, Integer day);
 }
