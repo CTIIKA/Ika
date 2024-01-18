@@ -1,6 +1,7 @@
 package com.cc.service;
 
 import com.cc.dto.EmployeeDepartmentDto;
+import com.cc.entity.Attendance;
 import com.cc.entity.Department;
 import com.cc.entity.Employee;
 import com.cc.entity.PositionRank;
@@ -38,4 +39,7 @@ public interface EmployeeService {
   boolean isEmployeeAgeValid(LocalDate birth_date);
 
 
+  boolean isPasswordValid(Integer employeeId, String password);
+
+  List<Attendance> getAllAttendances(Integer employeeId);
 }

@@ -3,8 +3,7 @@
 	<head>
 		<title>login</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" type="text/css" th:href="@{/css/styl.css}" />
-<!--		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 	</head>
 
 	<body>
@@ -23,8 +22,9 @@
 					<p id="whereami">
 					</p>
 					<h1>
-						ログイン
+						ユーザログイン
 					</h1>
+					<a th:href="@{/worker/loging}" class="link2">社員ログイン&raquo;</a>
 					<form th:action="@{/user/login}" method="post" th:object="${user}">
 						<table cellpadding="0" cellspacing="0" border="0"
 							class="form_table">
@@ -62,6 +62,7 @@
 							<input type="submit" class="button" value="ログイン &raquo;" />
 							<a th:href="@{/user/registering}">新規作成</a>
 						</p>
+
 					</form>
 				</div>
 			</div>

@@ -2,6 +2,7 @@ package com.cc.dao;
 
 
 import com.cc.dto.EmployeeDepartmentDto;
+import com.cc.entity.Attendance;
 import com.cc.entity.Employee;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +25,6 @@ public interface EmployeeDao {
           @Param("employee_name") String employee_name,
           @Param("department") String department,
           @Param("address") String address);
+
+  List<Attendance> getAllAttendances(Integer employeeId);
 }

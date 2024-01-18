@@ -4,6 +4,7 @@ import com.cc.dao.DepartmentDao;
 import com.cc.dao.EmployeeDao;
 import com.cc.dao.PositionRankDao;
 import com.cc.dto.EmployeeDepartmentDto;
+import com.cc.entity.Attendance;
 import com.cc.entity.Department;
 import com.cc.entity.Employee;
 import com.cc.entity.PositionRank;
@@ -51,6 +52,16 @@ public class EmployeeServiceImpl implements EmployeeService{
     return age.getYears() < minAge || age.getYears() > maxAge;
   }
 
+  @Override
+  public boolean isPasswordValid(Integer employeeId, String password) {
+    Employee employee = employeeDao.findById(employeeId);
+    return employee!=null&&employee.getPassword().equals(password);
+  }
+
+  @Override
+  public List<Attendance> getAllAttendances(Integer employeeId) {
+    return employeeDao.getAllAttendances(employeeId);
+  }
 
 
   @Override

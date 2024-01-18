@@ -1,0 +1,157 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>emplist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
+</head>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    <a th:if="${session.user!=null}" th:href="@{/worker/logout}">ログアウト</a>
+                    <a th:if="${session.user==null}" th:href="@{/worker/loging}">ログイン</a>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">勤怠情報一覧</a>
+                </h1>
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1>
+                <span id="successMsg1" th:text="${msg1}"></span>
+                <span id="successMsg2" th:text="${msg2}"></span>
+                <span id="successMsg3" th:text="${msg3}"></span>
+                <span id="successMsg4" th:text="${msg4}"></span>
+                <script th:inline="javascript">
+                    var messageElement1 = document.getElementById("successMsg1")
+                    var messageElement2 = document.getElementById("successMsg2")
+                    var messageElement3 = document.getElementById("successMsg3")
+                    var messageElement4 = document.getElementById("successMsg4")
+                    setTimeout(function (){
+                        messageElement1.style.display = 'none'
+                    },1500);
+                    setTimeout(function (){
+                        messageElement2.style.display = 'none'
+                    },1500);
+                    setTimeout(function (){
+                        messageElement3.style.display = 'none'
+                    },1500);
+                    setTimeout(function (){
+                        messageElement4.style.display = 'none'
+                    },1500);
+                </script>
+            </h1>
+
+            <form th:action="@{/woker/search}" method="post">
+
+
+                <div class="form-row">
+                    <label class="label">社員番号：</label>
+                    <input type="text" name="employee_id">
+                    &nbsp;<label class="label">社員名：</label>
+                    <input type="text" name="employee_name">
+                </div>
+                <div class="form-row">
+                    <label class="label1">年：</label>
+                    <input type="text" name="employee_name">
+                    &nbsp;<label class="label1">月：</label>
+                    <input type="text" name="address">
+                    <label class="label1">日：</label>
+                    <input type="text" name="address">
+                </div>
+
+                <button class="button" type="submit">検索</button>
+            </form>
+
+            <button onclick="refresh()" class="button">リセット</button>
+            <button class="button" onclick="addEmp()">打刻</button>
+
+            <script>
+                function addEmp(){
+                    location.href = '[[@{/employee/add}]]';
+                }
+                function refresh(){
+                    location.href='[[@{/employee/lists}]]';
+                }
+            </script>
+
+
+            <table class="table">
+                <tr class="table_header">
+                    <td>
+                        日付
+                    </td>
+                    <td>
+                        区分
+                    </td>
+                    <td>
+                        出社
+                    </td>
+                    <td>
+                        退社
+                    </td>
+                    <td>
+                        操作
+                    </td>
+
+                </tr>
+                <tr th:each="employee, rowStat : ${pageInfo.list}" th:class="${rowStat.odd}? 'row1' : 'row2'">
+                    <td>
+                        <span th:text="${employee.employee_id}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${employee.employee_name}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${employee.department_name}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${employee.address}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${employee.sex}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/employee/detail(employee_id=${employee.employee_id})}">詳細</a>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="number">  1～10件/<span th:text="${pageInfo.total}"></span>件</p >
+            <ul class="pagination">
+                <li class="top-page">
+                    <a class="button4" th:href="@{/employee/lists}">&laquo;</a >
+                </li>
+                <li class="prev">
+                    <a class="button5" th:href="@{/employee/lists(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">&lt;</a >
+                </li>
+                <li th:each="nav:${pageInfo.navigatepageNums}">
+                    <a class="button6" th:href="@{/employee/lists(pageNum=${nav})}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a >
+                    <span class="button7" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>
+                </li>
+                <li class="next">
+                    <a class="button8" th:href="@{/employee/lists(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">&gt;</a >
+                </li>
+                <li class="last-page">
+                    <a class="button9" th:href="@{/employee/lists(pageNum=${pageInfo.pages})}">&raquo;</a >
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            CC@126.com
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

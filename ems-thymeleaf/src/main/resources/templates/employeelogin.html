@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">社員管理システム</a>
+                </h1>
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1>
+                社員ログイン
+            </h1>
+            <a th:href="@{/user/loging}" class="link2">ユーザログイン&raquo;</a>
+            <form th:action="@{/worker/employeelogin}" method="post" th:object="${employee}">
+                <table class="form_table">
+                    <h2><span id="successMsg" th:text="${msg}"></span></h2>
+                    <script th:inline="javascript">
+                        var messageElement = document.getElementById("successMsg")
+                        setTimeout(function (){
+                            messageElement.style.display = 'none'
+                        },1500);
+                    </script>
+
+                    <div th:if="${errorMsg}" class="error">
+                        <p th:text="${errorMsg}"></p>
+                    </div>
+                    <tr>
+                        <td>
+                            社員ID
+                        </td>
+                        <td>
+                            <input type="text" class="inputgri" th:field="*{employee_id}" />
+                            <span th:if="${#fields.hasErrors('employee_name')}" class="error" th:errors="*{employee_name}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            パスワード
+                        </td>
+                        <td>
+                            <input type="password" class="inputgri" th:field="*{password}" />
+                            <span th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}"></span>
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    <input type="submit" class="button" value="ログイン &raquo;" />
+                </p>
+            </form>
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            CC@126.com
+        </div>
+    </div>
+</div>
+</body>
+</html>

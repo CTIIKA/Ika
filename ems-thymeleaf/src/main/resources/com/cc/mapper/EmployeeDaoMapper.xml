@@ -56,4 +56,10 @@
             </if>
         </where>
     </select>
+
+<!--    attendace-->
+    <select id="getAllAttendances" parameterType="map" resultType="Attendance">
+        select * from 'attendance' where employee_id = #{employee_id} and year(attendance_date) = year(curdate())and month(attendance_date) = month(curdate())
+        order by attendance_date ASC
+    </select>
 </mapper>
