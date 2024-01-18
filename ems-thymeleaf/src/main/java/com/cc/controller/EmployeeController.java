@@ -52,15 +52,20 @@ public class EmployeeController {
 //  搜索
   @RequestMapping("search")
   public String search(
-          Integer employee_id,
-          String employee_name,
-          String department,
-          String address, Model model){
+          @RequestParam(defaultValue = "1",value = "pageNum")Integer pageNum,
+          @RequestParam(required = false) Integer employee_id,
+          @RequestParam(required = false)String employee_name,
+          @RequestParam(required = false)String department,
+          @RequestParam(required = false)String address, Model model){
     PageHelper.clearPage();
-    PageHelper.startPage(1,5);
+    PageHelper.startPage(pageNum,5);
     List<EmployeeDepartmentDto>employee = employeeService.search(employee_id,employee_name,department,address);
     PageInfo<EmployeeDepartmentDto> pageInfo = new PageInfo<>(employee);
     model.addAttribute("pageInfo",pageInfo);
+    model.addAttribute("employee_id",employee_id);
+    model.addAttribute("employee_name",employee_name);
+    model.addAttribute("department",department);
+    model.addAttribute("address",address);
     return "emplist";
   }
 

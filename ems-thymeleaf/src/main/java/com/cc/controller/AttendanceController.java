@@ -79,7 +79,7 @@ public class AttendanceController {
 
   @RequestMapping("search")
   public String searchDate(
-
+          @RequestParam(defaultValue = "1",value = "pageNum")Integer pageNum,
           Integer employee_id,
           String employee_name,
           String department,

@@ -128,20 +128,20 @@
             <p class="number">  1～10件/<span th:text="${pageInfo.total}"></span>件</p >
             <ul class="pagination">
                 <li class="top-page">
-                    <a class="button4" th:href="@{/employee/lists}">&laquo;</a >
+                    <a class="button4" th:href="@{/employee/search(employee_id=${employee_id},employee_name=${employee_name},department=${department},address=${address})}">&laquo;</a >
                 </li>
                 <li class="prev">
-                    <a class="button5" th:href="@{/employee/lists(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">&lt;</a >
+                    <a class="button5" th:href="@{/employee/search(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1,employee_id=${employee_id},employee_name=${employee_name},department=${department},address=${address})}">&lt;</a >
                 </li>
                 <li th:each="nav:${pageInfo.navigatepageNums}">
-                    <a class="button6" th:href="@{/employee/lists(pageNum=${nav})}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a >
+                    <a class="button6" th:href="@{/employee/search(pageNum=${nav})}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a >
                     <span class="button7" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>
                 </li>
                 <li class="next">
-                    <a class="button8" th:href="@{/employee/lists(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">&gt;</a >
+                    <a class="button8" th:href="@{/employee/search(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages},employee_id=${employee_id},employee_name=${employee_name},department=${department},address=${address})}">&gt;</a >
                 </li>
                 <li class="last-page">
-                    <a class="button9" th:href="@{/employee/lists(pageNum=${pageInfo.pages})}">&raquo;</a >
+                    <a class="button9" th:href="@{/employee/search(pageNum=${pageInfo.pages},employee_id=${employee_id},employee_name=${employee_name},department=${department},address=${address})}">&raquo;</a >
                 </li>
             </ul>
         </div>
