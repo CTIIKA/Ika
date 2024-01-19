@@ -21,7 +21,7 @@
     <insert id="save" parameterType="Employee" useGeneratedKeys="true" keyProperty="employee_id">
         insert into `employee`(employee_id,employee_name,sex,address,department,job_title,employment_status,birth_date,hire_date,empInsuranceNumber,pensionNumber,positionRank,resume,password,email,phone) values (#{employee_id},#{employee_name},#{sex},#{address},#{department},#{job_title},#{employment_status},#{birth_date},#{hire_date},#{empInsuranceNumber},#{pensionNumber},#{positionRank},#{resume},#{password},#{email},#{phone})
     </insert>
-<!--    findById-->
+    <!--    findById-->
     <select id="findById" parameterType="Integer" resultType="Employee">
         select * from `employee`
         where employee_id = #{employee_id}
@@ -31,11 +31,11 @@
         update `employee` set employee_id=#{employee_id},employee_name=#{employee_name},sex=#{sex},address=#{address},department=#{department},job_title=#{job_title},employment_status=#{employment_status},birth_date=#{birth_date},hire_date=#{hire_date},empInsuranceNumber=#{empInsuranceNumber},pensionNumber=#{pensionNumber},positionRank=#{positionRank},resume=#{resume},password=#{password},email=#{email},phone=#{phone}
         where employee_id = #{employee_id}
     </update>
-<!--    delete-->
+    <!--    delete-->
     <delete id="delete" parameterType="Integer">
         delete from `employee` where employee_id = #{employee_id}
     </delete>
-<!--    search-->
+    <!--    search-->
     <select id="search" parameterType="map" resultMap="employeeDepartmentResultMap">
         select e.employee_id,e.employee_name,e.address,e.sex,d.department_name as department_name
         from employee e
@@ -57,7 +57,7 @@
         </where>
     </select>
 
-<!--    attendace-->
+    <!--    attendace-->
     <select id="getAllAttendances" parameterType="map" resultType="Attendance">
         select * from `attendance` where employee_id = #{employee_id} and year(attendance_date) = year(curdate())and month(attendance_date) = month(curdate())
         order by attendance_date ASC
@@ -78,5 +78,15 @@
         and employee_id = #{employee_id}
         </where>
         order by attendance_date ASC
+    </select>
+
+    <insert id="clock" parameterType="Attendance">
+    insert into `attendance`(employee_id,attendance_date,status,start_date,end_date)
+    values (#{employee_id},#{attendance_date},#{status},#{start_date},#{end_date})
+    </insert>
+
+    <select id="findByRecordId" parameterType="map" resultType="Attendance">
+        select * from `attendance`
+        where record_id = #{record_id}
     </select>
 </mapper>

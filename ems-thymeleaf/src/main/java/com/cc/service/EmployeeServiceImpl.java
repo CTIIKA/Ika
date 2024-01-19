@@ -68,6 +68,16 @@ public class EmployeeServiceImpl implements EmployeeService{
     return employeeDao.searchDate(employeeId,year,month,day);
   }
 
+  @Override
+  public void clock(Attendance attendance) {
+    employeeDao.clock(attendance);
+  }
+
+  @Override
+  public Attendance findByRecordId(Integer recordId) {
+    return employeeDao.findByRecordId(recordId);
+  }
+
 
   @Override
   public void delete(Integer employee_id) {

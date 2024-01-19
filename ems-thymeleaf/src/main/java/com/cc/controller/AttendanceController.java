@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
@@ -29,13 +31,13 @@ public class AttendanceController {
   @Autowired
   public AttendanceController(EmployeeService employeeService) {this.employeeService = employeeService;}
 
-  //  安全退出
+  //  登出
   @RequestMapping("logout")
   public String logout(HttpSession session) {
     session.invalidate();
     return "redirect:/worker/loging";
   }
-
+  //  初始化·登录
   @RequestMapping("loging")
   public String loginForm(Model model) {
     model.addAttribute("employee", new Employee());
@@ -66,7 +68,7 @@ public class AttendanceController {
     session.setAttribute("employee_name",employee_name);
     return "redirect:/worker/attendance?employee_id="+employee_id;
   }
-
+  //  打卡记录表
   @RequestMapping("attendance")
   public String getAttendance(Model model, @RequestParam(defaultValue = "1",value = "pageNum")Integer pageNum,@RequestParam Integer employee_id){
     PageHelper.clearPage();
@@ -101,6 +103,35 @@ public class AttendanceController {
     return "attendance";
   }
 
+  //  初始化·打卡
 
+  @RequestMapping("clocking")
+  public String clockForm(Model model){
+    model.addAttribute("attendance",new Attendance());
+    return "clock";
+  }
+  @RequestMapping("clock")
+  public String clock(@ModelAttribute("attendance")@Valid Attendance attendance, BindingResult rs,HttpSession session,RedirectAttributes ra,Model model){
+    log.debug("出勤状态:{},入社时间:{},退社时间:{}",attendance.getStatus(),attendance.getStart_date(),attendance.getEnd_date());
+    if (rs.hasErrors()){
+      return "clock";
+    }
+    if (attendance.getStatus().isEmpty())
+      attendance.setStatus(null);
+    Integer employee_id = (Integer) session.getAttribute("employee_id");
+    attendance.setEmployee_id(employee_id);
+    employeeService.clock(attendance);
+    ra.addFlashAttribute("msg","打刻しました！");
+    return "redirect:/worker/attendance?employee_id="+employee_id;
+  }
+
+  //  初始化·更新
+  @RequestMapping("detail")
+  public String detail(Integer record_id,Model model){
+    log.debug("当前查询打卡id:{}",record_id);
+    Attendance attendance = employeeService.findByRecordId(record_id);
+    model.addAttribute("attendance",attendance);
+    return "clockUpdate";
+  }
 
 }

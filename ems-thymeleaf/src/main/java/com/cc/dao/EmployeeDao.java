@@ -29,4 +29,8 @@ public interface EmployeeDao {
   List<Attendance> getAllAttendances(Integer employeeId);
 
   List<Attendance> searchDate(Integer employee_id, Integer year, Integer month, Integer day);
+
+  void clock(Attendance attendance);
+
+  Attendance findByRecordId(Integer recordId);
 }

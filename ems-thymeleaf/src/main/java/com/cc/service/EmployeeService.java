@@ -44,4 +44,8 @@ public interface EmployeeService {
   List<Attendance> getAllAttendances(Integer employeeId);
 
   List<Attendance> searchDate(Integer employeeId, Integer year, Integer month, Integer day);
+
+  void clock(Attendance attendance);
+
+  Attendance findByRecordId(Integer recordId);
 }

@@ -17,71 +17,48 @@
             </div>
             <div id="topheader">
                 <h1 id="title">
-                    <a href="#">勤怠情報一覧</a>
+                    <a href="#">社員管理システム</a>
                 </h1>
+
             </div>
         </div>
         <div id="content">
             <p id="whereami">
             </p>
             <h1>
+
+                勤怠情報一覧:
+
                 <span id="successMsg1" th:text="${msg1}"></span>
                 <span id="successMsg2" th:text="${msg2}"></span>
                 <span id="successMsg3" th:text="${msg3}"></span>
                 <span id="successMsg4" th:text="${msg4}"></span>
-                <script th:inline="javascript">
-                    var messageElement1 = document.getElementById("successMsg1")
-                    var messageElement2 = document.getElementById("successMsg2")
-                    var messageElement3 = document.getElementById("successMsg3")
-                    var messageElement4 = document.getElementById("successMsg4")
-                    setTimeout(function (){
-                        messageElement1.style.display = 'none'
-                    },1500);
-                    setTimeout(function (){
-                        messageElement2.style.display = 'none'
-                    },1500);
-                    setTimeout(function (){
-                        messageElement3.style.display = 'none'
-                    },1500);
-                    setTimeout(function (){
-                        messageElement4.style.display = 'none'
-                    },1500);
-                </script>
             </h1>
 
             <form th:action="@{/worker/search}" method="post">
-
-
                 <div class="form-row">
                     <label class="label">社員番号：</label>
-                    <input name="employee_id" th:value="${(#httpSession.getAttribute('employee_id'))}">
-                    &nbsp;<label class="label">社員名：</label>
-                    <input name="employee_name" th:value="${(#httpSession.getAttribute('employee_name'))}">
+                    <input type="text" th:value="${(#httpSession.getAttribute('employee_id'))}" style="display:none;">
+                    <span th:text="${(#httpSession.getAttribute('employee_id'))}"></span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <label class="label">社員名：</label>
+                    <span th:text="${(#httpSession.getAttribute('employee_name'))}"></span>
                 </div>
+
                 <div class="form-row">
                     <label class="label1">年：</label>
-                    <input type="text" name="employee_name">
+                    <input type="number" name="year" min="1900" max="2100">
                     &nbsp;<label class="label1">月：</label>
-                    <input type="text" name="address">
-                    <label class="label1">日：</label>
-                    <input type="text" name="address">
+                    <input type="number" name="month" min="1" max="12">
+                    &nbsp;<label class="label1">日：</label>
+                    <input type="number" name="day" min="1" max="31">
                 </div>
 
                 <button class="button" type="submit">検索</button>
             </form>
 
             <button onclick="refresh()" class="button">リセット</button>
-            <button class="button" onclick="addEmp()">打刻</button>
-
-            <script>
-                function addEmp(){
-                    location.href = '[[@{/employee/add}]]';
-                }
-                function refresh(){
-                    location.href='[[@{/employee/lists}]]';
-                }
-            </script>
-
+            <button class="button" onclick="window.location.href='/ems-thymeleaf/worker/clocking'">打刻</button>
 
             <table class="table">
                 <tr class="table_header">
@@ -149,5 +126,29 @@
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+    var messageElement1 = document.getElementById("successMsg1")
+    var messageElement2 = document.getElementById("successMsg2")
+    var messageElement3 = document.getElementById("successMsg3")
+    var messageElement4 = document.getElementById("successMsg4")
+    setTimeout(function (){
+    messageElement1.style.display = 'none'
+    },1500);
+    setTimeout(function (){
+    messageElement2.style.display = 'none'
+    },1500);
+    setTimeout(function (){
+    messageElement3.style.display = 'none'
+    },1500);
+    setTimeout(function (){
+    messageElement4.style.display = 'none'
+    },1500);
+
+    function refresh(){
+        var employee_id = /*[[${#httpSession.getAttribute('employee_id')}]]*/ '';
+        location.href='/ems-thymeleaf/worker/attendance?employee_id='+employee_id;
+    }
+
+</script>
 
 </html>
