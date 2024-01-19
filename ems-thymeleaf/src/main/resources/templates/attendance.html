@@ -12,8 +12,7 @@
         <div id="header">
             <div id="rightheader">
                 <p>
-                    <a th:if="${session.user!=null}" th:href="@{/worker/logout}">ログアウト</a>
-                    <a th:if="${session.user==null}" th:href="@{/worker/loging}">ログイン</a>
+                    <a th:if="${session.employee_id!=null}" th:href="@{/worker/logout}">ログアウト</a>
                 </p>
             </div>
             <div id="topheader">
@@ -50,14 +49,14 @@
                 </script>
             </h1>
 
-            <form th:action="@{/woker/search}" method="post">
+            <form th:action="@{/worker/search}" method="post">
 
 
                 <div class="form-row">
                     <label class="label">社員番号：</label>
-                    <input name="employee_id" th:value="${(#httpSession.setAttribute('employee_id'))}">
+                    <input name="employee_id" th:value="${(#httpSession.getAttribute('employee_id'))}">
                     &nbsp;<label class="label">社員名：</label>
-                    <input name="employee_name" th:value="${(#httpSession.setAttribute('employee_name'))}">
+                    <input name="employee_name" th:value="${(#httpSession.getAttribute('employee_name'))}">
                 </div>
                 <div class="form-row">
                     <label class="label1">年：</label>
@@ -131,7 +130,7 @@
                     <a class="button5" th:href="@{/worker/search(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1,employee_id=${(#httpSession.getAttribute('employee_id'))},year=${searchYear},month=${searchMonth},day=${searchDay})}">&lt;</a >
                 </li>
                 <li th:each="nav:${pageInfo.navigatepageNums}">
-                    <a class="button6" th:href="@{/worker/search(pageNum=${nav})}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a >
+                    <a class="button6" th:href="@{/worker/search(pageNum=${nav},employee_id=${(#httpSession.getAttribute('employee_id'))},year=${searchYear},month=${searchMonth},day=${searchDay})}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a >
                     <span class="button7" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>
                 </li>
                 <li class="next">

@@ -28,5 +28,5 @@ public interface EmployeeDao {
 
   List<Attendance> getAllAttendances(Integer employeeId);
 
-  List<Attendance> searchDate(Integer employeeId, Integer year, Integer month, Integer day);
+  List<Attendance> searchDate(Integer employee_id, Integer year, Integer month, Integer day);
 }
