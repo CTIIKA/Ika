@@ -78,6 +78,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     return employeeDao.findByRecordId(recordId);
   }
 
+  @Override
+  public void updateAttendance(Attendance attendance) {
+    employeeDao.updateAttendance(attendance);
+  }
+
 
   @Override
   public void delete(Integer employee_id) {

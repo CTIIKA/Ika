@@ -69,10 +69,10 @@
                         区分
                     </td>
                     <td>
-                        出社
+                        出勤
                     </td>
                     <td>
-                        退社
+                        退勤
                     </td>
                     <td>
                         操作
@@ -80,6 +80,8 @@
 
                 </tr>
                 <tr th:each="attendance, rowStat : ${pageInfo.list}" th:class="${rowStat.odd}? 'row1' : 'row2'">
+                    <span style="display: none" th:text="${attendance.record_id}"></span>
+
                     <td>
                         <span th:text="${#dates.format(attendance.attendance_date,'yyyy-MM-dd')}"></span>
                     </td>
@@ -93,7 +95,7 @@
                         <span th:text="${#temporals.format(attendance.end_date,'HH:mm')}"></span>
                     </td>
                     <td>
-                        <span th:href="@{worker/detail(record_id=${attendance.record_id})}">詳細</span>
+                        <a th:href="@{/worker/detail(record_id=${attendance.record_id})}">詳細</a>
                     </td>
                 </tr>
             </table>

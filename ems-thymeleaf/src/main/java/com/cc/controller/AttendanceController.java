@@ -111,8 +111,8 @@ public class AttendanceController {
     return "clock";
   }
   @RequestMapping("clock")
-  public String clock(@ModelAttribute("attendance")@Valid Attendance attendance, BindingResult rs,HttpSession session,RedirectAttributes ra,Model model){
-    log.debug("出勤状态:{},入社时间:{},退社时间:{}",attendance.getStatus(),attendance.getStart_date(),attendance.getEnd_date());
+  public String clock(@ModelAttribute("attendance")@Valid Attendance attendance, BindingResult rs,RedirectAttributes ra,Model model,HttpSession session){
+    log.debug("出勤状态:{},出勤时间:{},退勤时间:{}",attendance.getStatus(),attendance.getStart_date(),attendance.getEnd_date());
     if (rs.hasErrors()){
       return "clock";
     }
@@ -134,4 +134,18 @@ public class AttendanceController {
     return "clockUpdate";
   }
 
+  @RequestMapping("update")
+  public String update(@ModelAttribute("attendance")@Valid Attendance attendance,BindingResult rs,RedirectAttributes ra,Model model,HttpSession session) {
+    log.debug("出勤状态:{},出勤时间:{},退勤时间:{}",attendance.getStatus(),attendance.getStart_date(),attendance.getEnd_date());
+    if (rs.hasErrors()){
+      return "clockUpdate";
+    }
+    if (attendance.getStatus().isEmpty())
+      attendance.setStatus(null);
+    Integer employee_id = (Integer) session.getAttribute("employee_id");
+    attendance.setEmployee_id(employee_id);
+    employeeService.updateAttendance(attendance);
+    ra.addFlashAttribute("msg","更新しました！");
+    return "redirect:/worker/attendance?employee_id="+employee_id;
+  }
 }

@@ -26,7 +26,7 @@
                 打刻情報変更：
             </h1>
 
-            <form th:action="@{/worker/clock}" method="post" enctype="multipart/form-data" th:object="${attendance}">
+            <form th:action="@{/worker/clockUpdate}" method="post" enctype="multipart/form-data" th:object="${attendance}">
                 <table class="form_table">
                     <tr>
                         <td>
@@ -67,7 +67,7 @@
                     </tr>
                     <tr>
                         <td>
-                            出社：
+                            出勤：
                         </td>
                         <td>
                             <input type="time" class="inputgri" th:field="*{start_date}" />
@@ -75,24 +75,17 @@
                     </tr>
                     <tr>
                         <td>
-                            退社：
+                            退勤：
                         </td>
                         <td>
-                            <input type="text" class="inputgri" th:field="*{end_date}" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            作業時間：
-                        </td>
-                        <td>
-                            <span class="totalTime"></span>
+                            <input type="time" class="inputgri" th:field="*{end_date}" />
                         </td>
                     </tr>
 
+
                 </table>
                 <p>
-                    <button type="submit" onclick="showSuccessMsg()" class="button">打刻する</button>
+                    <button type="submit" onclick="showSuccessMsg()" class="button">更新する</button>
                     <input type="button" class="button" value="戻る" onclick="refresh()"/></p>
             </form>
         </div>

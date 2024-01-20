@@ -79,7 +79,7 @@ public class EmployeeController {
       oldFile.delete();
     }
     employeeService.delete(employee_id);
-    ra.addFlashAttribute("msg1","削除成功しました！");
+    ra.addFlashAttribute("msg1","削除しました！");
     return "redirect:/employee/lists";  //跳转员工列表
   }
 
@@ -112,7 +112,7 @@ public class EmployeeController {
         employee.setResume(newFileName);    // 保存新文件名字
       }
       employeeService.update(employee);
-      ra.addFlashAttribute("msg2", "更新成功しました！");
+      ra.addFlashAttribute("msg2", "更新しました！");
       return "redirect:/employee/lists";    // 更新成功，跳转员工列表
     }
   }
@@ -168,7 +168,7 @@ public class EmployeeController {
           employee.setResume(newFileName);    //保存文件名字
         }
         employeeService.save(employee);
-        ra.addFlashAttribute("msg3", "登録成功しました！");
+        ra.addFlashAttribute("msg3", "登録しました！");
         return "redirect:/employee/lists";
       }
     }
