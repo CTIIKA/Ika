@@ -1,14 +1,14 @@
 <!DOCTYPE html >
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>emplist</title>
+		<title>社員リスト</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 
 	</head>
 	<body>
 		<div id="wrap">
-			<div id="top_content"> 
+			<div id="top_content">
 				<div id="header">
 					<div id="rightheader">
 						<p>
@@ -126,6 +126,7 @@
 		</div>
 	</body>
 	<script th:inline="javascript">
+		var messageElement1 = document.getElementById("successMsg1")
 		var messageElement2 = document.getElementById("successMsg2")
 		var messageElement3 = document.getElementById("successMsg3")
 		var messageElement4 = document.getElementById("successMsg4")
@@ -141,11 +142,10 @@
 		setTimeout(function (){
 		messageElement4.style.display = 'none'
 		},1500);
-
-		var messageElement1 = document.getElementById("successMsg1")
-				<script>
-				function addEmp(){
-					location.href = '[[@{/employee/add}]]';
+	</script>
+	<script>
+		function addEmp(){
+			location.href = '[[@{/employee/add}]]';
 				}
 		function refresh(){
 			location.href='[[@{/employee/lists}]]';

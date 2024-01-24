@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>login</title>
+    <title>社員ログイン</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
@@ -27,24 +27,15 @@
             <a th:href="@{/user/loging}" class="link2">ユーザログイン&raquo;</a>
             <form th:action="@{/worker/login}" method="post" th:object="${employee}">
                 <table class="form_table">
-                    <h2><span id="successMsg" th:text="${msg}"></span></h2>
-                    <script th:inline="javascript">
-                        var messageElement = document.getElementById("successMsg")
-                        setTimeout(function (){
-                            messageElement.style.display = 'none'
-                        },1500);
-                    </script>
 
-                    <div th:if="${errorMsg}" class="error">
-                        <p th:text="${errorMsg}"></p>
-                    </div>
+                    <span th:if="${error2}" class="error" th:text="${error2}"></span>
                     <tr>
                         <td>
-                            社員ID
+                            社員番号
                         </td>
                         <td>
                             <input type="text" class="inputgri" th:field="*{employee_id}" />
-                            <span th:if="${#fields.hasErrors('employee_name')}" class="error" th:errors="*{employee_name}"></span>
+                            <span th:if="${error}" class="error" th:text="${error}"></span>
                         </td>
                     </tr>
                     <tr>
@@ -53,7 +44,7 @@
                         </td>
                         <td>
                             <input type="password" class="inputgri" th:field="*{password}" />
-                            <span th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}"></span>
+                            <span th:if="${error1}" class="error" th:text="${error1}"></span>
                         </td>
                     </tr>
                 </table>
@@ -71,3 +62,9 @@
 </div>
 </body>
 </html>
+<script th:inline="javascript">
+    var messageElement = document.getElementById("successMsg")
+    setTimeout(function (){
+        messageElement.style.display = 'none'
+    },1500);
+</script>

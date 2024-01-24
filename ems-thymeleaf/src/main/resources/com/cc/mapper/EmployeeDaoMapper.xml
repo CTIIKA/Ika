@@ -92,10 +92,10 @@
 
     <update id="updateAttendance" parameterType="Attendance">
         update `attendance` set
-            attendace_date = #{attendance_date}
-            status = #{status}
-            start_date = #{start_date}
-            end_date = #{end_date}
+                                attendance_date = #{attendance_date},
+                                status = #{status},
+                                start_date = #{start_date},
+                                end_date = #{end_date}
         where record_id = #{record_id}
     </update>
 </mapper>

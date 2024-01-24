@@ -56,14 +56,14 @@ public class AttendanceController {
       model.addAttribute("error","社員番号を入力してください！");
       return "employeelogin";
     } else if (StringUtils.isEmpty(employee.getPassword())) {
-      model.addAttribute("error", "パスワードを入力してください!");
+      model.addAttribute("error1", "パスワードを入力してください!");
       return "employeelogin";
     }else if (!employeeService.isPasswordValid(employee_id,password)) {
-       model.addAttribute("error", "社員IDまだはパスワードが違います!");
+       model.addAttribute("error2", "社員IDまだはパスワードが違います!");
        return "employeelogin";
     }
     String employee_name = employeeService.findById(employee_id).getEmployee_name();
-    ra.addFlashAttribute("error","ログインしました！");
+    ra.addFlashAttribute("error3","ログインしました！");
     session.setAttribute("employee_id",employee_id);
     session.setAttribute("employee_name",employee_name);
     return "redirect:/worker/attendance?employee_id="+employee_id;
@@ -111,7 +111,7 @@ public class AttendanceController {
     return "clock";
   }
   @RequestMapping("clock")
-  public String clock(@ModelAttribute("attendance")@Valid Attendance attendance, BindingResult rs,RedirectAttributes ra,Model model,HttpSession session){
+  public String clock(@ModelAttribute("attendance")@Valid Attendance attendance, BindingResult rs,RedirectAttributes ra,HttpSession session){
     log.debug("出勤状态:{},出勤时间:{},退勤时间:{}",attendance.getStatus(),attendance.getStart_date(),attendance.getEnd_date());
     if (rs.hasErrors()){
       return "clock";
@@ -135,7 +135,7 @@ public class AttendanceController {
   }
 
   @RequestMapping("update")
-  public String update(@ModelAttribute("attendance")@Valid Attendance attendance,BindingResult rs,RedirectAttributes ra,Model model,HttpSession session) {
+  public String update(@ModelAttribute("attendance")@Valid Attendance attendance,BindingResult rs,RedirectAttributes ra,HttpSession session) {
     log.debug("出勤状态:{},出勤时间:{},退勤时间:{}",attendance.getStatus(),attendance.getStart_date(),attendance.getEnd_date());
     if (rs.hasErrors()){
       return "clockUpdate";
@@ -145,7 +145,7 @@ public class AttendanceController {
     Integer employee_id = (Integer) session.getAttribute("employee_id");
     attendance.setEmployee_id(employee_id);
     employeeService.updateAttendance(attendance);
-    ra.addFlashAttribute("msg","更新しました！");
+    ra.addFlashAttribute("msg1","更新しました！");
     return "redirect:/worker/attendance?employee_id="+employee_id;
   }
 }

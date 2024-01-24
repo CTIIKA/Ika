@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>添加员工信息</title>
+    <title>打刻情報変更</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 
@@ -26,14 +26,14 @@
                 打刻情報変更：
             </h1>
 
-            <form th:action="@{/worker/clockUpdate}" method="post" enctype="multipart/form-data" th:object="${attendance}">
+            <form th:action="@{/worker/update}" method="post" enctype="multipart/form-data" th:object="${attendance}">
                 <table class="form_table">
                     <tr>
                         <td>
                             社員番号：
                         </td>
                         <td>
-                            <span th:text="${#httpSession.getAttribute('employee_id')}"></span>
+                            <span th:text="${(#httpSession.getAttribute('employee_id'))}"></span>
                         </td>
                     </tr>
                     <tr>
@@ -41,7 +41,7 @@
                             社員名：
                         </td>
                         <td>
-                            <span th:text="${#httpSession.getAttribute('employee_name')}"></span>
+                            <span th:text="${(#httpSession.getAttribute('employee_name'))}"></span>
                         </td>
                     </tr>
                     <tr>
@@ -51,6 +51,8 @@
                         <td>
                             <input type="date" th:field="*{attendance_date}" />
                     </tr>
+                    <input style="display: none" th:field="*{record_id}">
+
                     <tr>
                         <td>
                             区分：
@@ -85,7 +87,7 @@
 
                 </table>
                 <p>
-                    <button type="submit" onclick="showSuccessMsg()" class="button">更新する</button>
+                    <button type="submit" class="button">更新する</button>
                     <input type="button" class="button" value="戻る" onclick="refresh()"/></p>
             </form>
         </div>
@@ -101,7 +103,6 @@
 <script th:inline="javascript">
     function refresh(){
         var employee_id = /*[[${#httpSession.getAttribute('employee_id')}]]*/ '';
-        location.href='/ems-thymeleaf/worker/attendance?employee_id='+employee_id;
-    }
+        location.href='/ems-thymeleaf/worker/attendance?employee_id='+employee_id;}
 </script>
 </html>

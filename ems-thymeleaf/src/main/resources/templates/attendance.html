@@ -1,7 +1,7 @@
 <!DOCTYPE html >
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>emplist</title>
+    <title>勤怠情報一覧</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 
@@ -26,23 +26,23 @@
             <p id="whereami">
             </p>
             <h1>
-
-                勤怠情報一覧:
-
-                <span id="successMsg1" th:text="${msg1}"></span>
-                <span id="successMsg2" th:text="${msg2}"></span>
-                <span id="successMsg3" th:text="${msg3}"></span>
-                <span id="successMsg4" th:text="${msg4}"></span>
+            勤怠情報一覧:
             </h1>
+            <h2>
+                <span id="successMsg1" th:text="${error3}"></span>
+                <span id="successMsg2" th:text="${msg}"></span>
+                <span id="successMsg3" th:text="${msg1}"></span>
+            </h2>
+
 
             <form th:action="@{/worker/search}" method="post">
                 <div class="form-row">
                     <label class="label">社員番号：</label>
-                    <input type="text" th:value="${(#httpSession.getAttribute('employee_id'))}" style="display:none;">
+                    <input type="text" name="employee_id" th:value="${(#httpSession.getAttribute('employee_id'))}" style="display:none;">
                     <span th:text="${(#httpSession.getAttribute('employee_id'))}"></span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <label class="label">社員名：</label>
-                    <span th:text="${(#httpSession.getAttribute('employee_name'))}"></span>
+                    <span name="employee_name" th:text="${(#httpSession.getAttribute('employee_name'))}"></span>
                 </div>
 
                 <div class="form-row">
@@ -81,6 +81,7 @@
                 </tr>
                 <tr th:each="attendance, rowStat : ${pageInfo.list}" th:class="${rowStat.odd}? 'row1' : 'row2'">
                     <span style="display: none" th:text="${attendance.record_id}"></span>
+
 
                     <td>
                         <span th:text="${#dates.format(attendance.attendance_date,'yyyy-MM-dd')}"></span>
